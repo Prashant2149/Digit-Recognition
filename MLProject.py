@@ -1,15 +1,15 @@
 import matplotlib.pyplot as plt
 from sklearn import datasets,svm
 digits=datasets.load_digits()  #here it is not as basic dictionary it is a dataframe
-print "digits:",digits.keys()
-print "digits.target-----------",digits.target
+print ("digits:",digits.keys())
+print( "digits.target-----------",digits.target)
 
 
 images_and_labels=list(zip(digits.images,digits.target))
-print "len(images_and_labels)",len(images_and_labels)
+print ("len(images_and_labels)",len(images_and_labels))
 
 for index,[image,label] in enumerate(images_and_labels[:5]): #for black 0 and for white it is max
-    print "index:",index,"image:\n",image, "  Label:",label             #Thus we are cutting in suh a way that we are getting data in three parts as array Index ,Image and Target
+    print ("index:",index,"image:\n",image, "  Label:",label)             #Thus we are cutting in suh a way that we are getting data in three parts as array Index ,Image and Target
     plt.subplot(2,5,index+1) #Position numbering starts from 1
     plt.axis('on') #used to on the ticks
     plt.imshow(image,cmap=plt.cm.gray_r,interpolation='nearest') #used to show the Image
@@ -20,10 +20,10 @@ for index,[image,label] in enumerate(images_and_labels[:5]): #for black 0 and fo
 
 
 n_samples=len(digits.images)
-print "n_samples :",n_samples
+print ("n_samples :",n_samples)
 
 imageData=digits.images.reshape((n_samples,-1)) #Here image was of 2 D and it is being converted to 1 D
-print "After reshaped : len(imageData[0]):",len( imageData[0])
+print ("After reshaped : len(imageData[0]):",len( imageData[0]))
 
 #create a Classifies : a support vector classifier
 classifier=svm.SVC(gamma=0.001) #learning rate should always be small and represented by gamma
@@ -42,7 +42,7 @@ for index,[image,prediction] in enumerate(images_and_predictions[:5]):
     plt.axis('on')
     plt.imshow(image,cmap=plt.cm.gray_r,interpolation='nearest')
     plt.title('Prediction:%i' % prediction)
-print 'Original Values :',digits.target[n_samples//2: (n_samples//2)+5]
+print ('Original Values :',digits.target[n_samples//2: (n_samples//2)+5])
 plt.show()
 classifier=svm.SVC(gamma=0.001)
 classifier.fit(imageData[:],digits.target[:])
@@ -54,15 +54,15 @@ img=imresize(img,(8,8)) #changes it to 8*8 images
 img=img.astype(digits.images.dtype) #changes it to datatype needed i.e. Pandas
 img=bytescale(img,high=16.0,low=0) #resolution change to 0 to 16 as same resolution
 #in training of images
-print " img :======\n",img.shape, "\n",img #Here we have changed it to 8*8 and total made of 3 colours so [8,8,3]
+print (" img :======\n",img.shape, "\n",img) #Here we have changed it to 8*8 and total made of 3 colours so [8,8,3]
 x_testData=[]
 for c in img:
     for r in c:
         x_testData.append(sum(r)/3.0)
-print "x_testData :\n",x_testData
+print ("x_testData :\n",x_testData)
 
-print "len(x_testData):\n",len(x_testData)
+print ("len(x_testData):\n",len(x_testData))
 x_testData=[x_testData]
-print"len(x_testData):\n",len(x_testData)
-print"Machine output=",classifier.predict(x_testData)
+print("len(x_testData):\n",len(x_testData))
+print("Machine output=",classifier.predict(x_testData))
 plt.show()
